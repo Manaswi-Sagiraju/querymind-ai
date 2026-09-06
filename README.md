@@ -4,21 +4,20 @@
 
 ### Ask Your Database Questions in Plain English
 
-QueryMind AI is an AI-powered database assistant that converts natural-language questions into SQL queries using the actual schema of a connected database.
+QueryMind AI is an AI-powered database assistant that converts natural-language questions into SQL queries using the actual database schema.
 
-It supports **SQLite and PostgreSQL**, allowing users to connect a database, automatically inspect its schema, ask questions in natural language, generate SQL using Gemini, review the query, and execute it to retrieve results.
+It supports **SQLite and PostgreSQL** and uses **Google Gemini** to generate SQL queries, explain them, and return database results.
 
 <p>
 
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge&logo=tailwindcss)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi)
-![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python)
-![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-D71F00?style=for-the-badge)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supported-4169E1?style=for-the-badge&logo=postgresql)
-![SQLite](https://img.shields.io/badge/SQLite-Supported-003B57?style=for-the-badge&logo=sqlite)
-![Gemini](https://img.shields.io/badge/Gemini-AI-4285F4?style=for-the-badge&logo=google)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge\&logo=react)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge\&logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge\&logo=tailwindcss)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge\&logo=fastapi)
+![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge\&logo=python)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supported-4169E1?style=for-the-badge\&logo=postgresql)
+![SQLite](https://img.shields.io/badge/SQLite-Supported-003B57?style=for-the-badge\&logo=sqlite)
+![Gemini](https://img.shields.io/badge/Gemini-AI-4285F4?style=for-the-badge\&logo=google)
 
 </p>
 
@@ -26,57 +25,11 @@ It supports **SQLite and PostgreSQL**, allowing users to connect a database, aut
 
 ---
 
-# 🔗 Live Demo
+## 📖 Overview
 
-🌐 **Frontend:** https://lazy-ql.vercel.app
+QueryMind AI provides a simple natural-language interface for interacting with databases.
 
-🔧 **Backend API:** https://QueryMind AI.onrender.com
-
-📚 **API Documentation:** https://QueryMind AI.onrender.com/docs
-
----
-
-# 🎥 Product Tour
-
-<table width="100%">
-<tr>
-
-<td width="50%" align="center">
-
-<h3>🌞 Light Mode</h3>
-
-<img src="assets/workflow-light.gif" alt="QueryMind AI Learning Workflow - Light Mode" width="95%">
-
-</td>
-
-<td width="50%" align="center">
-
-<h3>🌙 Dark Mode</h3>
-
-<img src="assets/workflow-dark.gif" alt="QueryMind AI Learning Workflow - Dark Mode" width="95%">
-
-</td>
-
-</tr>
-</table>
-
----
-
-# 📖 Why QueryMind AI?
-
-SQL is powerful, but users need to understand database schemas, table relationships, column names, and SQL syntax before they can query a database effectively.
-
-For simple questions, users often have to:
-
-1. Open a database client.
-2. Inspect the schema.
-3. Figure out the correct tables and columns.
-4. Write the SQL query.
-5. Execute and inspect the results.
-
-QueryMind AI provides a natural-language interface on top of this workflow.
-
-Instead of writing:
+Instead of writing SQL manually:
 
 ```sql
 SELECT name, salary
@@ -85,154 +38,121 @@ ORDER BY salary DESC
 LIMIT 5;
 ```
 
-users can simply ask:
+you can ask:
 
-> **"Show me the 5 highest paid employees."**
+> "Show me the 5 highest paid employees."
 
-QueryMind AI extracts the database schema and provides it to Gemini along with strict SQL-generation rules. Gemini then generates a SQL query based on the actual tables and columns available in the database.
+QueryMind AI reads the database schema and uses it to generate the appropriate SQL query.
 
 ---
 
-# ✨ Features
+## ✨ Features
 
-## 🔌 Database Connectivity
+### 🔌 Database Connectivity
 
-- SQLite database upload
-- PostgreSQL connection support
-- SQLAlchemy-based database abstraction
-- Database connection validation
-- Database session management
-- Connection error handling
+* SQLite database support
+* PostgreSQL support
+* Database connection validation
+* Database session management
+* SQLAlchemy-based database abstraction
 
 ### 🗂️ Schema Intelligence
 
-- Automatic schema extraction
-- Table discovery
-- Column discovery
-- Database-aware schema representation
-- Schema passed directly to the AI generation layer
-- Prevents the AI from inventing tables or columns
+* Automatic schema extraction
+* Table and column discovery
+* Schema-aware SQL generation
+* Prevents AI from inventing tables or columns
 
 ### 🤖 AI SQL Generation
 
-- Natural-language → SQL
-- Google Gemini integration
-- Schema-aware prompting
-- SQL explanation
-- Confidence score
-- Structured AI responses
-- Provider-independent AI service abstraction
+* Natural language → SQL
+* Google Gemini integration
+* Schema-aware prompting
+* SQL explanation
+* Confidence score
+* Structured AI responses
 
 ### 🛡️ SQL Safety
 
-QueryMind AI enforces **read-only SQL access** through two independent layers:
+QueryMind AI uses multiple layers of SQL validation.
 
-1. **Prompt-level instruction** — Gemini is explicitly instructed not to generate destructive operations (`INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `CREATE`, `TRUNCATE`).
-2. **Execution-level validation** — before any SQL reaches the database, it's parsed (via `sqlglot`) and rejected unless it is a single, valid `SELECT` statement. This blocks destructive statements *and* stacked/multi-statement queries (e.g. `SELECT ...; DROP TABLE ...;`), even if they bypass the prompt layer entirely — including SQL submitted directly through the query editor rather than generated by the AI.
-
-This means safety doesn't depend on the LLM behaving — it's enforced independently at the API boundary before execution.
+* AI is instructed to generate read-only SQL
+* SQL is parsed using `sqlglot`
+* Only a single `SELECT` statement is allowed
+* `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `CREATE`, and `TRUNCATE` are blocked
+* Multiple SQL statements are rejected
+* Manually edited queries are also validated before execution
 
 ### ▶️ Query Execution
 
-- Execute generated SQL
-- Manually edit and re-run generated SQL before executing
-- Execute queries against SQLite
-- Execute queries against PostgreSQL
-- Display returned columns
-- Display returned rows
-- Query execution error handling
-- Inline error correction UI when a query is rejected or fails, with a clear reason and a retry path
-
-### 💬 Interactive Query Experience
-
-- Natural-language chat interface
-- AI-generated SQL
-- SQL explanation
-- Confidence score (adapts for ambiguous/underspecified questions)
-- Loading states
-- Error handling
-- Query result display
+* Execute generated SQL
+* Edit SQL before execution
+* Execute queries against SQLite
+* Execute queries against PostgreSQL
+* Display query results
+* Handle query errors
 
 ---
 
-# 🔄 How QueryMind AI Works
+## 🔄 How It Works
 
 ```text
 User
- │
- │ Natural-language question
- ▼
-┌─────────────────────┐
-│   QueryMind AI Frontend   │
-│   React + Vite      │
-└──────────┬──────────┘
-           │
-           │ REST API
-           ▼
-┌─────────────────────┐
-│   FastAPI Backend   │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Database Session    │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Schema Extraction   │
-└──────────┬──────────┘
-           │
-           │ Schema + Question
-           ▼
-┌─────────────────────┐
-│     Gemini AI       │
-└──────────┬──────────┘
-           │
-           │ Generated SQL
-           ▼
-┌─────────────────────┐
-│  SQL Safety Check    │
-│ (parsed statement    │
-│  validation)          │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Database Execution  │
-└──────────┬──────────┘
-           │
-           ▼
+  │
+  │ Natural-language question
+  ▼
+React Frontend
+  │
+  │ REST API
+  ▼
+FastAPI Backend
+  │
+  ├── Database Session
+  │
+  ├── Schema Extraction
+  │
+  └── AI Service
+          │
+          ▼
+      Google Gemini
+          │
+          ▼
+      Generated SQL
+          │
+          ▼
+      SQL Safety Check
+          │
+          ▼
+    Database Execution
+          │
+          ▼
         Results
 ```
 
 ---
 
-# 🧠 AI Architecture
+## 🧠 AI Architecture
 
-QueryMind AI separates the AI layer from the API layer using an `AIService` abstraction.
+QueryMind AI uses an `AIService` abstraction to separate the AI layer from the API.
 
 ```text
-                 AIService
-                     │
-          ┌──────────┴──────────┐
-          ▼                     ▼
-   GeminiService          MockAIService
-          │                     │
-          ▼                     ▼
-     Gemini API            Automated Tests
+AIService
+   │
+   ├── GeminiService
+   │       └── Google Gemini
+   │
+   └── MockAIService
+           └── Automated Tests
 ```
 
-The AI service is injected into the `/generate` route via FastAPI's dependency injection (`Depends`), rather than being hardcoded — production always uses `GeminiService`, while the test suite overrides it with `MockAIService`, so tests run deterministically without needing a live network call or API quota.
-
-The AI service receives:
+The AI receives:
 
 ```text
 User Question
 +
 Database Schema
 +
-SQL Generation Rules
+SQL Rules
 ```
 
 and returns:
@@ -245,171 +165,54 @@ and returns:
 }
 ```
 
-This separation makes the AI provider replaceable without coupling the API layer directly to a specific provider.
-
 ---
 
-# 🛡️ SQL Safety in Detail
+## 🏗️ Database Architecture
 
-QueryMind AI enforces **read-only database interaction** through defense in depth — safety isn't left to the AI's judgment alone.
-
-**Layer 1 — Prompt instruction.** The AI generation layer explicitly restricts Gemini to read operations.
-
-**Layer 2 — Parsed statement validation.** Every SQL string — whether generated by Gemini or manually edited by the user before execution — is parsed with `sqlglot` and rejected unless it resolves to exactly one `SELECT` statement. This independently blocks:
-
-```sql
-DELETE FROM employees;
-```
-
-```sql
-DROP TABLE employees;
-```
-
-```sql
-UPDATE employees SET salary = 0;
-```
-
-```sql
-SELECT * FROM employees; DROP TABLE employees;  -- stacked statements, also blocked
-```
-
-Rejected queries return a clear error (`"Only SELECT statements are allowed"` / `"Multiple SQL statements are not allowed"`) surfaced directly in the UI, with a retry path.
-
-The current MVP intentionally keeps database interaction read-only.
-
-> Controlled write operations with explicit confirmation and role-based permissions are planned for future versions.
-
----
-
-# 🖼️ Application Preview
-
-## 🏠 Home
-
-| Dark Mode | Light Mode |
-|-----------|------------|
-| ![](assets/home-dark.png) | ![](assets/home-light.png) |
-
----
-
-## 🔌 Database Connection
-
-| Dark Mode | Light Mode |
-|-----------|------------|
-| ![](assets/data-dark.png) | ![](assets/data-light.png) |
-
----
-
-## 🤖 AI SQL Generation
-
-| Dark Mode | Light Mode |
-|-----------|------------|
-| ![](assets/ai-dark.png) | ![](assets/ai-light.png) |
-
----
-
-# 🏗️ System Architecture
-
-```mermaid
-flowchart TD
-
-    User([👤 User]) --> FE
-
-    subgraph FE ["🎨 Frontend - React + Vite"]
-        F1["Database Connection"]
-        F2["Schema Viewer"]
-        F3["AI Chat"]
-        F4["SQL Viewer"]
-        F5["Query Results"]
-    end
-
-    FE <-->|"REST API / HTTP"| BE
-
-    subgraph BE ["⚙️ Backend - FastAPI"]
-        B1["API Routes"]
-        B2["Session Manager"]
-        B3["Database Adapters"]
-        B4["Schema Extractor"]
-        B5["AI Service"]
-        B6["SQL Safety (sqlglot validation)"]
-    end
-
-    B5 <-->|"Question + Schema"| AI
-
-    subgraph AI ["🤖 Google Gemini"]
-        A1["Natural Language Understanding"]
-        A2["SQL Generation"]
-        A3["Explanation"]
-        A4["Confidence"]
-    end
-
-    B3 --> DB
-
-    subgraph DB ["🗄️ Supported Databases"]
-        D1["SQLite"]
-        D2["PostgreSQL"]
-    end
-```
-
----
-
-# 🔌 Database Adapter Architecture
-
-QueryMind AI uses a common database adapter interface so different database engines can be supported without changing the API layer.
+QueryMind AI uses a common database adapter interface.
 
 ```text
-             DatabaseAdapter
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-   SQLiteAdapter       PostgreSQLAdapter
-          │                   │
-          ▼                   ▼
-       SQLite            PostgreSQL
+DatabaseAdapter
+      │
+      ├── SQLiteAdapter
+      │
+      └── PostgreSQLAdapter
 ```
 
 Each adapter handles:
 
-- Connection
-- Schema extraction
-- Query execution
-- Closing the connection
-
-This makes the database layer extensible for future database engines.
+* Database connection
+* Schema extraction
+* Query execution
+* Connection closing
 
 ---
 
-# 📡 API
+## 📡 API
 
-## Create Database Session
+### Create Database Session
 
 ```http
 POST /database/session
 ```
 
-Supports:
+Supports SQLite and PostgreSQL connections.
 
-- SQLite file upload
-- PostgreSQL connection URL
-
----
-
-## Get Database Schema
+### Get Database Schema
 
 ```http
-POST /database/schema?session_id=<session_id>
+POST /database/schema
 ```
 
 Returns the schema of the connected database.
 
----
-
-## Generate SQL
+### Generate SQL
 
 ```http
 POST /generate
 ```
 
-Example request:
+Example:
 
 ```json
 {
@@ -418,25 +221,13 @@ Example request:
 }
 ```
 
-Example response:
-
-```json
-{
-  "sql": "SELECT name, salary FROM employees ORDER BY salary DESC;",
-  "explanation": "Retrieves employees ordered by salary from highest to lowest.",
-  "confidence": 0.95
-}
-```
-
----
-
-## Execute Query
+### Execute Query
 
 ```http
 POST /database/execute
 ```
 
-Example request:
+Example:
 
 ```json
 {
@@ -445,187 +236,100 @@ Example request:
 }
 ```
 
-Example response:
+---
 
-```json
-{
-  "success": true,
-  "columns": ["name", "salary"],
-  "rows": [
-    ["Aditya", 1200000],
-    ["Rahul", 1000000]
-  ]
-}
-```
+## ⚡ Tech Stack
 
-Queries that fail SQL safety validation return a `400` response with a descriptive error message instead of executing.
+**Frontend**
+
+* React
+* Vite
+* Tailwind CSS
+* JavaScript
+* REST API
+
+**Backend**
+
+* Python
+* FastAPI
+* SQLAlchemy
+* Pydantic
+* Uvicorn
+* sqlglot
+
+**Databases**
+
+* SQLite
+* PostgreSQL
+* Psycopg 3
+
+**AI**
+
+* Google Gemini
+* `google-genai`
+
+**Testing**
+
+* Pytest
+* FastAPI TestClient
+* HTTPX
+
+**Tools**
+
+* Git
+* GitHub
+* Postman
+* VS Code
 
 ---
 
-# ⚡ Tech Stack
-
-## 🎨 Frontend
-
-- React
-- Vite
-- Tailwind CSS
-- React Hooks
-- REST API integration
-
-## ⚙️ Backend
-
-- Python
-- FastAPI
-- SQLAlchemy
-- Pydantic
-- Uvicorn
-- sqlglot (SQL parsing for safety validation)
-
-## 🗄️ Database
-
-- SQLite
-- PostgreSQL
-- Psycopg 3
-
-## 🤖 AI
-
-- Google Gemini
-- `google-genai`
-
-## 🧪 Testing
-
-- Pytest
-- FastAPI TestClient
-- HTTPX
-- API tests
-- Database adapter tests (SQLite and PostgreSQL, run against a real Postgres instance)
-- SQL safety validation tests
-- Schema extraction tests
-- Session management tests
-- Deterministic AI-generation tests via `MockAIService` (no live API call or quota required)
-
-## 🛠️ Developer Tools
-
-- Git
-- GitHub
-- Postman
-- VS Code
-
----
-
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```text
 QueryMind AI
 │
 ├── assets
-│   ├── ai-dark.png
-│   ├── ai-light.png
-│   ├── data-dark.png
-│   ├── data-light.png
-│   ├── home-dark.png
-│   ├── home-light.png
-│   ├── learning-workflow-demo-darkmode.gif
-│   └── learning-workflow-demo-lightmode.gif
-│
+├── client
 ├── database
 │   └── samples
-│       └── company.db
-│
-├── client
-│   ├── public
-│   ├── src
-│   │   ├── api
-│   │   ├── assets
-│   │   ├── components
-│   │   │   ├── chat
-│   │   │   ├── common
-│   │   │   ├── connection
-│   │   │   ├── context
-│   │   │   ├── hooks
-│   │   │   ├── modals
-│   │   │   ├── results
-│   │   │   ├── schema
-│   │   │   └── sql
-│   │   ├── data
-│   │   ├── ConnectionPage.jsx
-│   │   ├── HomePage.jsx
-│   │   ├── Workspace.jsx
-│   │   ├── App.css
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   ├── .env.example
-│   ├── .gitignore
-│   ├── README.md
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package-lock.json
-│   ├── package.json
-│   └── vite.config.js
-│
 ├── scripts
-│   └── init_demo_db.py
-│
 ├── server
 │   ├── app
 │   │   ├── ai
-│   │   │   ├── gemini.py
-│   │   │   ├── mock.py
-│   │   │   └── service.py
 │   │   ├── api
-│   │   │   └── routes
 │   │   ├── database
-│   │   │   ├── base.py
-│   │   │   ├── connection.py
-│   │   │   ├── sqlite.py
-│   │   │   ├── postgres.py
-│   │   │   ├── safety.py
-│   │   │   ├── schema.py
-│   │   │   ├── exceptions.py
-│   │   │   └── session_manager.py
 │   │   ├── models
 │   │   └── main.py
-│   ├── tests
-│   │   ├── api
-│   │   └── database
-│   ├── .env.example
-│   ├── requirements.txt
-│   └── ...
+│   │
+│   └── tests
 │
 ├── .gitignore
-├── README.md
-└── LICENSE
+├── LICENSE
+└── README.md
 ```
-
-# 🚀 Getting Started
-
-Follow these steps to run QueryMind AI locally.
-
-## 📋 Prerequisites
-
-Make sure you have:
-
-- Python 3.12+
-- Node.js
-- npm
-- Git
-- Gemini API key
-- PostgreSQL database *(optional, for PostgreSQL connections and running the PostgreSQL adapter tests)*
 
 ---
 
-# 📥 Clone the Repository
+## 🚀 Getting Started
+
+### Prerequisites
+
+Install:
+
+* Python 3.12+
+* Node.js
+* npm
+* Git
+* Gemini API key
+
+### Clone Repository
 
 ```bash
-git clone https://github.com/dyson-025/QueryMind AI.git
-
-cd QueryMind AI
+git clone https://github.com/Manaswi-Sagiraju/querymind-ai.git
+cd querymind-ai
 ```
 
----
-
-# ⚙️ Backend Setup
+### Backend Setup
 
 ```bash
 cd server
@@ -633,21 +337,19 @@ cd server
 python -m venv venv
 ```
 
-### Windows
+#### Windows
 
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-### Install Dependencies
+Install dependencies:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
----
-
-# 🔑 Environment Variables
+### Environment Variables
 
 Create:
 
@@ -660,32 +362,23 @@ Add:
 ```env
 GEMINI_API_KEY=your_gemini_api_key
 GEMINI_MODEL=gemini-2.5-flash-lite
-TEST_POSTGRES_URL=your_test_postgres_connection_string
 ```
-
-`TEST_POSTGRES_URL` is only needed to run the PostgreSQL adapter tests locally — if it isn't set, those tests are skipped automatically rather than failing.
 
 > Never commit `.env` or API keys to GitHub.
 
----
-
-# ▶️ Run Backend
-
-From the `server` directory:
+### Run Backend
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-The backend will run at:
+Backend:
 
 ```text
 http://127.0.0.1:8000
 ```
 
----
-
-# 🎨 Frontend Setup
+### Frontend Setup
 
 Open another terminal:
 
@@ -695,11 +388,11 @@ npm install
 npm run dev
 ```
 
-Open the URL provided by Vite.
+Open the URL shown by Vite.
 
 ---
 
-# 🧪 Running Tests
+## 🧪 Running Tests
 
 From the `server` directory:
 
@@ -707,57 +400,44 @@ From the `server` directory:
 python -m pytest
 ```
 
-The test suite covers:
+Tests cover:
 
-- API endpoints
-- Database connections
-- SQLite adapter
-- PostgreSQL adapter (skipped automatically if `TEST_POSTGRES_URL` is not set)
-- SQL safety validation (blocks destructive and multi-statement SQL)
-- Schema extraction
-- Database sessions
-- Query execution
-- SQL generation (via `MockAIService`, no live Gemini call required)
-
----
-
-# 🛣️ Roadmap
-
-QueryMind AI MVP currently focuses on **AI-powered natural-language database querying**.
-
-Future versions may include:
-
-- [ ] User authentication
-- [ ] Admin dashboard
-- [ ] Company/workspace management
-- [ ] Invite links
-- [ ] Role-based access control
-- [ ] Database-level permissions
-- [ ] Controlled `INSERT` / `UPDATE` / `DELETE`
-- [ ] Explicit write-query confirmation
-- [ ] Query history
-- [ ] Audit logs
-- [ ] Secure credential management
-- [ ] Additional database engines
-- [ ] Production-ready enterprise deployment
+* API endpoints
+* Database connections
+* SQLite adapter
+* PostgreSQL adapter
+* SQL safety validation
+* Schema extraction
+* Database sessions
+* Query execution
+* AI generation using `MockAIService`
 
 ---
 
-# 🤝 Contributing
+## 🛣️ Future Enhancements
 
-Contributions are welcome!
-
-If you'd like to improve QueryMind AI:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run the test suite
-5. Commit your changes
-6. Push your branch
-7. Open a Pull Request
-
-Please ensure existing tests continue to pass.
+* MySQL and additional database support
+* User authentication
+* Query history
+* Audit logs
+* Role-based access control
+* Controlled write operations
+* Database permissions
+* Enterprise deployment
 
 ---
 
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👩‍💻 Author
+
+**Manaswi Sagiraju**
+
+B.Tech Computer Science Engineering
+MVGR College of Engineering
+
+GitHub: [Manaswi-Sagiraju](https://github.com/Manaswi-Sagiraju)
