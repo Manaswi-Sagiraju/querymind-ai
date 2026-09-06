@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ QueryMind AI
+# ⚡QueryMind AI
 
 ### Ask Your Database Questions in Plain English
 
