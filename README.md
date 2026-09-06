@@ -1,5 +1,5 @@
 <div align="center">
-https://querymind-ai-api.onrender.com  
+
 # ⚡QueryMind AI
 
 ### Ask Your Database Questions in Plain English
@@ -335,6 +335,8 @@ cd querymind-ai
 cd server
 
 python -m venv venv
+
+after deploying backend- https://querymind-ai-api.onrender.com  
 ```
 
 #### Windows
